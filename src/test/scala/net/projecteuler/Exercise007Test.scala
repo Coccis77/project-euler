@@ -9,5 +9,4 @@ class Exercise007Test extends FunSuite {
       Exercise007.solution(10001)
     }
   }
-
 }
