@@ -1,39 +1,37 @@
 package net.projecteuler
 
+import scala.collection.immutable.TreeSet
+
 object Helper {
 
   def fibonacci(): Stream[Int] = fibonacci(1, 1)
 
   private def fibonacci(a: Int, b: Int): Stream[Int] = a #:: fibonacci(b, a + b)
 
-  def bigIntStream(min: BigInt): Stream[BigInt] = min #:: bigIntStream(min + 1)
+  def bigIntStream(min: BigInt, step: BigInt): Stream[BigInt] = min #:: bigIntStream(min + step, step)
 
-  def primes(): Stream[BigInt] = nextPrimes(2)
-
-  private def nextPrimes(x: BigInt): Stream[BigInt] = {
-    x #:: nextPrimes(bigIntStream(x + 1).dropWhile(!isPrime(_)).head)
-  }
+  def primes(): Stream[BigInt] = 2 #:: nextPrimes(3, TreeSet(2, 3))
 
   def isPrime(x: BigInt): Boolean = {
-    !bigIntStream(2).takeWhile(_ <= sqrt(x)).exists(x % _ == 0)
+    primes().takeWhile(p => p * p <= x).forall(x % _ != 0)
   }
 
-  def sqrt(number: BigInt): BigInt = {
-    def next(n: BigInt, i: BigInt): BigInt = (n + i / n) >> 1
-    val one = BigInt(1)
-    val n = one
-    val n1 = next(n, number)
-    def sqrtHelper(n: BigInt, n1: BigInt): BigInt = if ((n1 - n).abs <= one) List(n1, n).max else sqrtHelper(n1, next(n1, number))
-    sqrtHelper(n, n1)
+  private def nextPrimes(x: BigInt, previousPrimes: TreeSet[BigInt]): Stream[BigInt] = {
+    val nextPrime: BigInt = bigIntStream(x + 2, 2).dropWhile(!isPrime(_, previousPrimes)).head
+    x #:: nextPrimes(nextPrime, previousPrimes + nextPrime)
+  }
+
+  private def isPrime(x: BigInt, previousPrimes: TreeSet[BigInt]): Boolean = {
+    previousPrimes.takeWhile(p => p * p <= x).forall(x % _ != 0)
   }
 
   def isPalindrome(n: BigInt): Boolean = {
     n.toString().reverse == n.toString()
   }
 
-  def gcd(a: BigInt, b: BigInt): BigInt = if (b==0) a.abs else gcd(b, a%b)
+  def gcd(a: BigInt, b: BigInt): BigInt = if (b == 0) a.abs else gcd(b, a % b)
 
-  def lcm(a: BigInt, b: BigInt): BigInt = (a*b).abs / gcd(a,b)
+  def lcm(a: BigInt, b: BigInt): BigInt = (a * b).abs / gcd(a, b)
 
 
 }
