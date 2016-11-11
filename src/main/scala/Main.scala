@@ -1,9 +1,7 @@
-import net.projecteuler.{Exercise010, Exercise012, Helper}
-
-import scala.collection.immutable.TreeSet
+import net.projecteuler.Exercise013
 
 object Main {
   def main(args: Array[String]) = {
-    println(Exercise012.solution(500))
+    println(Exercise013.solution(10))
   }
 }
