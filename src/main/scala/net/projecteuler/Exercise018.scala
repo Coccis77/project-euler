@@ -4,7 +4,11 @@ import java.io.InputStream
 
 object Exercise018 {
   def solution(): BigInt = {
-    val stream : InputStream = getClass.getResourceAsStream("/Exercise018.txt")
+    solution("Exercise018.txt")
+  }
+  
+  def solution(file: String): BigInt = {
+    val stream : InputStream = getClass.getResourceAsStream("/" + file)
     val valuesArray = scala.io.Source.fromInputStream(stream).getLines()
       .map(_.split(" ").map(BigInt.apply))
       .toArray
