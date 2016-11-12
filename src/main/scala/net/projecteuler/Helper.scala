@@ -33,6 +33,23 @@ object Helper {
     primes().takeWhile(p => p * p <= x).forall(x % _ != 0)
   }
 
+  def collatzStream(x: BigInt): Stream[BigInt] = {
+    def collatz(x: BigInt): BigInt = {
+      if (x % 2 == 0) x / 2 else 3 * x + 1
+    }
+
+    val nextValue = if (x != 1) collatzStream(collatz(x)) else Stream.empty
+    x #:: nextValue
+  }
+
+  def collatzLen(n: BigInt) = {
+    def collatzLenAcc(n: BigInt, seqLen: BigInt): BigInt =
+      if (n == 1) seqLen + 1
+      else collatzLenAcc(
+        if ((n & 1) == 0) n >> 1 else 3 * n + 1,
+        seqLen + 1)
+    collatzLenAcc(n, 0)
+  }
 
   def isPalindrome(n: BigInt): Boolean = {
     n.toString().reverse == n.toString()
