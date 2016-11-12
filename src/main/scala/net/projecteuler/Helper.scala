@@ -65,5 +65,7 @@ object Helper {
 
   def lcm(a: BigInt, b: BigInt): BigInt = (a * b).abs / gcd(a, b)
 
-
+  def factorial(n: BigInt): BigInt = {
+    if (n == 0) 1 else n * factorial(n-1)
+  }
 }
