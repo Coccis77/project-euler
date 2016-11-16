@@ -1,7 +1,7 @@
-import net.projecteuler.Exercise067
+import net.projecteuler.Exercise020
 
 object Main {
   def main(args: Array[String]) = {
-    println(Exercise067.solution())
+    println(Exercise020.solution(100))
   }
 }
