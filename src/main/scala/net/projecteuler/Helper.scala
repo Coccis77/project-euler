@@ -61,6 +61,10 @@ object Helper {
     divisors.++(divisors.map(n / _))
   }
 
+  def properDivisors(n: BigInt): TreeSet[BigInt] = {
+    factors(n) - n
+  }
+
   def gcd(a: BigInt, b: BigInt): BigInt = if (b == 0) a.abs else gcd(b, a % b)
 
   def lcm(a: BigInt, b: BigInt): BigInt = (a * b).abs / gcd(a, b)
