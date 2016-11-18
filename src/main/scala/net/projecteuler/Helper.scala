@@ -65,6 +65,10 @@ object Helper {
     factors(n) - n
   }
 
+  def isAbundant(n: BigInt): Boolean = {
+    properDivisors(n).sum >  n
+  }
+
   def gcd(a: BigInt, b: BigInt): BigInt = if (b == 0) a.abs else gcd(b, a % b)
 
   def lcm(a: BigInt, b: BigInt): BigInt = (a * b).abs / gcd(a, b)
