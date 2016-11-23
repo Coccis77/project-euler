@@ -76,4 +76,17 @@ object Helper {
   def factorial(n: BigInt): BigInt = {
     bigIntStream(1, 1).takeWhile(_ <= n).fold(BigInt(1))((acc, x) => acc * x)
   }
+
+  def allPermutation(word: String): Array[String] = {
+    def generatePermutation(char: Char, string: String): Array[String] =  {
+      (0 to string.length).map(string.splitAt(_))
+        .map(x => x._1 + char + x._2).toArray
+    }
+
+    if (word.length == 1) {
+      Array(word)
+    } else {
+      allPermutation(word.tail).flatMap(generatePermutation(word.head, _))
+    }
+  }
 }
