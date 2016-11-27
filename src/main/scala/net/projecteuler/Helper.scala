@@ -14,6 +14,8 @@ object Helper {
     triangleNumber(1, 2)
   }
 
+  def intStream(min: Int, step: Int): Stream[Int] = min #:: intStream(min + step, step)
+
   def bigIntStream(min: BigInt, step: BigInt): Stream[BigInt] = min #:: bigIntStream(min + step, step)
 
   def primes(): Stream[BigInt] = {
@@ -30,7 +32,11 @@ object Helper {
   }
 
   def isPrime(x: BigInt): Boolean = {
-    primes().takeWhile(p => p * p <= x).forall(x % _ != 0)
+    if (x < 2) {
+      false
+    } else {
+      primes().takeWhile(p => p * p <= x).forall(x % _ != 0)
+    }
   }
 
   def collatzStream(x: BigInt): Stream[BigInt] = {
@@ -66,7 +72,7 @@ object Helper {
   }
 
   def isAbundant(n: BigInt): Boolean = {
-    properDivisors(n).sum >  n
+    properDivisors(n).sum > n
   }
 
   def gcd(a: BigInt, b: BigInt): BigInt = if (b == 0) a.abs else gcd(b, a % b)
@@ -78,7 +84,7 @@ object Helper {
   }
 
   def allPermutation(word: String): Array[String] = {
-    def generatePermutation(char: Char, string: String): Array[String] =  {
+    def generatePermutation(char: Char, string: String): Array[String] = {
       (0 to string.length).map(string.splitAt(_))
         .map(x => x._1 + char + x._2).toArray
     }
